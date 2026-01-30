@@ -169,7 +169,7 @@ export default function CaseStrategyPage() {
               icon={cap.icon}
               title={cap.title}
               description={cap.description}
-              color="indigo"
+              color="violet"
             />
           ))}
         </div>

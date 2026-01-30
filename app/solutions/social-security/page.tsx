@@ -117,7 +117,7 @@ export default function SocialSecurityPage() {
               icon={feature.icon}
               title={feature.title}
               description={feature.description}
-              color="emerald"
+              color="teal"
             />
           ))}
         </div>

@@ -117,7 +117,7 @@ export default function WorkersCompPage() {
               icon={feature.icon}
               title={feature.title}
               description={feature.description}
-              color="amber"
+              color="green"
             />
           ))}
         </div>

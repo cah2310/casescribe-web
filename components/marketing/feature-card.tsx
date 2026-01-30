@@ -2,33 +2,30 @@ import { cn } from "@/lib/utils";
 
 const glowMap = {
   blue: "hover-glow-blue",
-  indigo: "hover-glow-indigo",
-  emerald: "hover-glow-emerald",
-  amber: "hover-glow-amber",
-  red: "",
+  teal: "hover-glow-teal",
+  green: "hover-glow-green",
+  violet: "hover-glow-violet",
 } as const;
 
 const iconBgMap = {
-  blue: "bg-blue-50 group-hover:bg-blue-100",
-  indigo: "bg-indigo-50 group-hover:bg-indigo-100",
-  emerald: "bg-emerald-50 group-hover:bg-emerald-100",
-  amber: "bg-amber-50 group-hover:bg-amber-100",
-  red: "bg-red-50",
+  blue: "bg-accent-blue group-hover:brightness-95",
+  teal: "bg-accent-teal group-hover:brightness-95",
+  green: "bg-accent-green group-hover:brightness-95",
+  violet: "bg-accent-violet group-hover:brightness-95",
 } as const;
 
 const iconColorMap = {
-  blue: "text-blue-600",
-  indigo: "text-indigo-600",
-  emerald: "text-emerald-600",
-  amber: "text-amber-600",
-  red: "text-red-500",
+  blue: "text-accent-blue",
+  teal: "text-accent-teal",
+  green: "text-accent-green",
+  violet: "text-accent-violet",
 } as const;
 
 interface FeatureCardProps {
   icon: React.ComponentType<{ className?: string }>;
   title: string;
   description: string;
-  color?: "blue" | "indigo" | "emerald" | "amber" | "red";
+  color?: "blue" | "teal" | "green" | "violet";
   layout?: "stacked" | "horizontal";
   className?: string;
 }

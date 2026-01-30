@@ -173,18 +173,24 @@ const problems = [
     title: "Mountains of Documents",
     description:
       "Veterans' C-files average 1,000+ pages. Manual review takes 2-10 hours per case, and critical evidence gets missed.",
+    iconBg: "bg-accent-blue",
+    iconText: "text-accent-blue",
   },
   {
     icon: SearchX,
     title: "Missed Opportunities",
     description:
       "Current tools organize files but don't identify secondary conditions, increased ratings, or 3.156(c) reopening opportunities.",
+    iconBg: "bg-accent-violet",
+    iconText: "text-accent-violet",
   },
   {
     icon: TrendingDown,
     title: "Scaling Is Impossible",
     description:
       "Growing your caseload means hiring more reviewers. At $150+/case with competitors, margins evaporate.",
+    iconBg: "bg-accent-teal",
+    iconText: "text-accent-teal",
   },
 ];
 
@@ -200,8 +206,8 @@ function ProblemSection() {
         {problems.map((problem, i) => (
           <FadeIn key={problem.title} delay={i * 0.1}>
             <GlowCard>
-              <div className="icon-box-md bg-red-50">
-                <problem.icon className="h-6 w-6 text-red-500" />
+              <div className={`icon-box-md ${problem.iconBg}`}>
+                <problem.icon className={`h-6 w-6 ${problem.iconText}`} />
               </div>
               <h3 className="mt-4 heading-card-lg">
                 {problem.title}
@@ -253,7 +259,7 @@ function ProductOverview() {
                       key={f}
                       className="flex items-center gap-2 text-sm text-slate-700"
                     >
-                      <CheckCircle className="h-4 w-4 shrink-0 text-blue-600" />
+                      <CheckCircle className="h-4 w-4 shrink-0 text-accent-blue" />
                       {f}
                     </li>
                   ))}
@@ -277,22 +283,22 @@ function ProductOverview() {
                     {
                       type: "Medical Record",
                       status: "Classified",
-                      color: "bg-blue-100 text-blue-700",
+                      color: "badge-accent-blue",
                     },
                     {
                       type: "C&P Exam",
                       status: "Extracted",
-                      color: "bg-green-100 text-green-700",
+                      color: "badge-accent-green",
                     },
                     {
                       type: "Service Record",
                       status: "3.156(c) Found",
-                      color: "bg-amber-100 text-amber-700",
+                      color: "badge-accent-teal",
                     },
                     {
                       type: "Buddy Statement",
                       status: "Analyzed",
-                      color: "bg-purple-100 text-purple-700",
+                      color: "badge-accent-violet",
                     },
                   ].map((item) => (
                     <div
@@ -316,8 +322,8 @@ function ProductOverview() {
 
           {/* Case Strategy card */}
           <BentoCard>
-            <div className="icon-box-sm bg-indigo-100">
-              <Brain className="h-5 w-5 text-indigo-600" />
+            <div className="icon-box-sm bg-accent-violet">
+              <Brain className="h-5 w-5 text-accent-violet" />
             </div>
             <h3 className="mt-4 text-lg font-bold text-slate-900">
               Case Strategy
@@ -335,8 +341,8 @@ function ProductOverview() {
 
           {/* Speed metric card */}
           <BentoCard className="flex flex-col items-center justify-center text-center">
-            <div className="icon-box-md bg-emerald-100">
-              <Zap className="h-6 w-6 text-emerald-600" />
+            <div className="icon-box-md bg-accent-teal">
+              <Zap className="h-6 w-6 text-accent-teal" />
             </div>
             <p className="mt-4 text-4xl font-bold text-slate-900">10 min</p>
             <p className="mt-1 text-sm text-slate-500">
@@ -346,8 +352,8 @@ function ProductOverview() {
 
           {/* Security badge card */}
           <BentoCard className="flex flex-col items-center justify-center text-center">
-            <div className="icon-box-md bg-blue-100">
-              <ShieldCheck className="h-6 w-6 text-blue-600" />
+            <div className="icon-box-md bg-accent-blue">
+              <ShieldCheck className="h-6 w-6 text-accent-blue" />
             </div>
             <p className="mt-4 text-lg font-bold text-slate-900">
               SOC 2 Type II
@@ -358,10 +364,10 @@ function ProductOverview() {
           {/* Ambient CRM card */}
           <BentoCard>
             <div className="flex items-center gap-3">
-              <div className="icon-box-sm bg-amber-100">
-                <Headphones className="h-5 w-5 text-amber-600" />
+              <div className="icon-box-sm bg-accent-green">
+                <Headphones className="h-5 w-5 text-accent-green" />
               </div>
-              <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800">
+              <span className="badge-accent-green rounded-full px-2 py-0.5 text-xs font-medium">
                 Coming Soon
               </span>
             </div>
@@ -564,6 +570,10 @@ const practiceAreas = [
     description:
       "C-file processing, BVA decision analysis, condition detection, and 3.156(c) service record analysis.",
     href: "/solutions/va-disability",
+    iconBg: "bg-accent-blue",
+    iconText: "text-accent-blue",
+    linkColor: "text-accent-blue",
+    hoverColor: "group-hover-text-accent-blue",
   },
   {
     icon: ShieldIcon,
@@ -571,6 +581,10 @@ const practiceAreas = [
     description:
       "Medical records analysis, SSA workflow optimization, and evidence gap identification.",
     href: "/solutions/social-security",
+    iconBg: "bg-accent-teal",
+    iconText: "text-accent-teal",
+    linkColor: "text-accent-teal",
+    hoverColor: "group-hover-text-accent-teal",
   },
   {
     icon: Briefcase,
@@ -578,6 +592,10 @@ const practiceAreas = [
     description:
       "WC-specific document handling, medical record analysis, and case strategy.",
     href: "/solutions/workers-comp",
+    iconBg: "bg-accent-green",
+    iconText: "text-accent-green",
+    linkColor: "text-accent-green",
+    hoverColor: "group-hover-text-accent-green",
   },
 ];
 
@@ -597,16 +615,16 @@ function PracticeAreasSection() {
               className="group block"
             >
               <GlowCard>
-                <div className="icon-box-md bg-blue-50">
-                  <area.icon className="h-6 w-6 text-blue-600" />
+                <div className={`icon-box-md ${area.iconBg}`}>
+                  <area.icon className={`h-6 w-6 ${area.iconText}`} />
                 </div>
-                <h3 className="mt-4 heading-card-lg transition-colors group-hover:text-blue-600">
+                <h3 className={`mt-4 heading-card-lg transition-colors ${area.hoverColor}`}>
                   {area.title}
                 </h3>
                 <p className="mt-2 text-card-desc">
                   {area.description}
                 </p>
-                <span className="mt-4 inline-flex items-center text-sm font-medium text-blue-600">
+                <span className={`mt-4 inline-flex items-center text-sm font-medium ${area.linkColor}`}>
                   Learn more <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </GlowCard>
@@ -625,24 +643,32 @@ const trustPoints = [
     title: "SOC 2 Type II Certified",
     description:
       "Enterprise-grade security controls audited by independent assessors.",
+    iconBg: "bg-accent-blue",
+    iconText: "text-accent-blue",
   },
   {
     icon: Users,
     title: "Built by Disability Law Experts",
     description:
       "Founded by Hill & Ponton, a firm with 30+ years helping veterans.",
+    iconBg: "bg-accent-teal",
+    iconText: "text-accent-teal",
   },
   {
     icon: Database,
     title: "Your Data, Your Control",
     description:
       "Full data portability. Export everything. Leave anytime. No lock-in.",
+    iconBg: "bg-accent-green",
+    iconText: "text-accent-green",
   },
   {
     icon: Lock,
     title: "Bring Your Own Keys",
     description:
       "BYOK option available. Your LLM API keys, your infrastructure.",
+    iconBg: "bg-accent-violet",
+    iconText: "text-accent-violet",
   },
 ];
 
@@ -658,8 +684,8 @@ function TrustSection() {
         {trustPoints.map((point, i) => (
           <FadeIn key={point.title} delay={i * 0.1}>
             <div className="card-light-hover text-center">
-              <div className="mx-auto icon-box-md bg-blue-100">
-                <point.icon className="h-6 w-6 text-blue-600" />
+              <div className={`mx-auto icon-box-md ${point.iconBg}`}>
+                <point.icon className={`h-6 w-6 ${point.iconText}`} />
               </div>
               <h3 className="mt-4 text-sm font-semibold text-slate-900">
                 {point.title}

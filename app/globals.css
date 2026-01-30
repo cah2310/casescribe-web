@@ -338,12 +338,38 @@
 .hover-glow-teal {
   @apply hover:shadow-[0_0_30px_rgba(92,212,244,0.1)];
 }
-.hover-glow-emerald {
-  @apply hover:border-emerald-200/60 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)];
+.hover-glow-green {
+  @apply hover:shadow-[0_0_30px_rgba(123,190,170,0.15)];
 }
-.hover-glow-amber {
-  @apply hover:border-amber-200/60 hover:shadow-[0_0_30px_rgba(245,158,11,0.1)];
+.hover-glow-violet {
+  @apply hover:shadow-[0_0_30px_rgba(137,112,240,0.12)];
 }
+
+/* ── Brand Accent Utilities ── */
+
+/* Icon/element backgrounds (light tints) */
+.bg-accent-blue   { background-color: var(--brand-blue-50); }
+.bg-accent-teal   { background-color: var(--brand-teal-50); }
+.bg-accent-green  { background-color: var(--brand-green-50); }
+.bg-accent-violet { background-color: var(--brand-violet-50); }
+
+/* Icon/element foreground colors */
+.text-accent-blue   { color: var(--brand-blue-500); }
+.text-accent-teal   { color: var(--brand-teal-500); }
+.text-accent-green  { color: var(--brand-green-700); }
+.text-accent-violet { color: var(--brand-violet-600); }
+
+/* Group-hover foregrounds (for linked cards) */
+.group:hover .group-hover-text-accent-blue   { color: var(--brand-blue-500); }
+.group:hover .group-hover-text-accent-teal   { color: var(--brand-teal-500); }
+.group:hover .group-hover-text-accent-green  { color: var(--brand-green-700); }
+.group:hover .group-hover-text-accent-violet { color: var(--brand-violet-600); }
+
+/* Badge pills (slightly stronger backgrounds for inline labels) */
+.badge-accent-blue   { background-color: var(--brand-blue-100); color: var(--brand-blue-500); }
+.badge-accent-teal   { background-color: var(--brand-teal-100); color: var(--brand-teal-700); }
+.badge-accent-green  { background-color: var(--brand-green-50); color: var(--brand-green-700); }
+.badge-accent-violet { background-color: var(--brand-violet-50); color: var(--brand-violet-600); }
 
 /* Typography */
 .heading-page {
