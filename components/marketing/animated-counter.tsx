@@ -9,6 +9,8 @@ interface AnimatedCounterProps {
   prefix?: string;
   label: string;
   duration?: number;
+  numberClassName?: string;
+  labelClassName?: string;
 }
 
 export function AnimatedCounter({
@@ -17,6 +19,8 @@ export function AnimatedCounter({
   prefix = "",
   label,
   duration = 2,
+  numberClassName,
+  labelClassName,
 }: AnimatedCounterProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -51,13 +55,13 @@ export function AnimatedCounter({
       <div className="relative inline-block">
         {/* Radial glow behind number */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,rgba(59,130,246,0.15),transparent)]" />
-        <div className="relative text-4xl font-bold text-blue-400 sm:text-5xl">
+        <div className={numberClassName ?? "relative text-4xl font-bold text-blue-400 sm:text-5xl"}>
           {prefix}
           {count}
           {suffix}
         </div>
       </div>
-      <div className="mt-2 text-sm font-medium text-slate-400">{label}</div>
+      <div className={labelClassName ?? "mt-2 text-sm font-medium text-slate-400"}>{label}</div>
     </motion.div>
   );
 }

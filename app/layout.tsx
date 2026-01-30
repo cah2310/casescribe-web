@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Epilogue } from "next/font/google";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+import { LayoutShell } from "@/components/layout/layout-shell";
 import "./globals.css";
 
 const inter = Inter({
@@ -50,9 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${epilogue.variable} font-sans antialiased`}>
-        <Navbar />
-        <main className="min-h-screen pt-16">{children}</main>
-        <Footer />
+        <LayoutShell>{children}</LayoutShell>
       </body>
     </html>
   );
