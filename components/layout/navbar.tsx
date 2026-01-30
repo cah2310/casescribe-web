@@ -10,250 +10,17 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
-import {
-  Menu,
-  ChevronDown,
-  FileText,
-  Brain,
-  Headphones,
-  Scale,
-  Shield,
-  Briefcase,
-  BookOpen,
-  Gavel,
-  Wrench,
-  Newspaper,
-  Users,
-  Lock,
-  Phone,
-  ArrowRight,
-} from "lucide-react";
+import { Menu } from "lucide-react";
 
-const products = [
-  {
-    title: "Document Intelligence",
-    description: "OCR, classify, and extract from 150+ document types",
-    href: "/products/document-intelligence",
-    icon: FileText,
-  },
-  {
-    title: "Case Strategy",
-    description: "AI-powered scenario planning and filing recommendations",
-    href: "/products/case-strategy",
-    icon: Brain,
-  },
-  {
-    title: "Ambient CRM",
-    description: "Coming soon — intelligent case management",
-    href: "/products/ambient-crm",
-    icon: Headphones,
-  },
+const navLinks = [
+  { label: "Products", href: "/products" },
+  { label: "Resources", href: "/resources" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
 ];
-
-const solutions = [
-  {
-    title: "VA Disability",
-    description: "C-file processing, BVA decisions, condition detection",
-    href: "/solutions/va-disability",
-    icon: Scale,
-  },
-  {
-    title: "Social Security",
-    description: "SSA workflow and medical records analysis",
-    href: "/solutions/social-security",
-    icon: Shield,
-  },
-  {
-    title: "Workers' Compensation",
-    description: "WC-specific document handling and analysis",
-    href: "/solutions/workers-comp",
-    icon: Briefcase,
-  },
-];
-
-const resources = [
-  {
-    title: "Blog",
-    description: "Product updates, legal tech insights, and tutorials",
-    href: "/blog",
-    icon: BookOpen,
-  },
-  {
-    title: "BVA Decisions",
-    description: "Search and explore Board of Veterans' Appeals decisions",
-    href: "/resources/bva-decisions",
-    icon: Gavel,
-  },
-  {
-    title: "3.156(c) Analyzer",
-    description: "AI-powered service record analysis tool",
-    href: "/resources/tools/3156c-analyzer",
-    icon: Wrench,
-  },
-  {
-    title: "Changelog",
-    description: "Latest product updates and releases",
-    href: "/changelog",
-    icon: Newspaper,
-  },
-];
-
-const company = [
-  {
-    title: "About",
-    description: "Our story, team, and mission",
-    href: "/about",
-    icon: Users,
-  },
-  {
-    title: "Security",
-    description: "SOC 2 Type II, data handling, and compliance",
-    href: "/security",
-    icon: Lock,
-  },
-  {
-    title: "Contact",
-    description: "Get in touch with our team",
-    href: "/contact",
-    icon: Phone,
-  },
-];
-
-type DropdownItem = {
-  title: string;
-  description: string;
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-};
-
-function DesktopDropdown({
-  label,
-  items,
-  open,
-  onToggle,
-  featured,
-  dark,
-}: {
-  label: string;
-  items: DropdownItem[];
-  open: boolean;
-  onToggle: () => void;
-  featured?: { title: string; description: string; href: string };
-  dark?: boolean;
-}) {
-  return (
-    <div className="relative">
-      <button
-        onClick={onToggle}
-        className={`flex items-center gap-1 text-sm font-medium transition-colors ${
-          dark
-            ? "text-white/90 hover:text-white"
-            : "text-slate-700 hover:text-slate-900"
-        }`}
-      >
-        {label}
-        <ChevronDown
-          className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
-        />
-      </button>
-      {open && (
-        <>
-          <div className="fixed inset-0 z-40" onClick={onToggle} />
-          <div className="absolute left-1/2 top-full z-50 mt-3 w-[420px] -translate-x-1/2 overflow-hidden rounded-2xl border bg-white shadow-xl">
-            <div className="p-2">
-              {items.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={onToggle}
-                  className="flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-slate-50"
-                >
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#EEF2FF]">
-                    <item.icon className="h-4 w-4 text-[#2C5DFF]" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-medium text-slate-900">
-                      {item.title}
-                    </div>
-                    <div className="text-xs text-slate-500">
-                      {item.description}
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            {featured && (
-              <div className="border-t bg-slate-50 p-3">
-                <Link
-                  href={featured.href}
-                  onClick={onToggle}
-                  className="group flex items-center justify-between rounded-lg p-2 transition-colors hover:bg-white"
-                >
-                  <div>
-                    <p className="text-xs font-semibold text-[#2C5DFF]">
-                      Featured
-                    </p>
-                    <p className="text-sm font-medium text-slate-900">
-                      {featured.title}
-                    </p>
-                    <p className="text-xs text-slate-500">
-                      {featured.description}
-                    </p>
-                  </div>
-                  <ArrowRight className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </div>
-            )}
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
-
-function MobileNavSection({
-  label,
-  items,
-  onClose,
-}: {
-  label: string;
-  items: DropdownItem[];
-  onClose: () => void;
-}) {
-  const [expanded, setExpanded] = useState(false);
-
-  return (
-    <div>
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center justify-between py-2 text-base font-medium text-slate-900"
-      >
-        {label}
-        <ChevronDown
-          className={`h-4 w-4 transition-transform ${expanded ? "rotate-180" : ""}`}
-        />
-      </button>
-      {expanded && (
-        <div className="ml-2 space-y-1 pb-2">
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={onClose}
-              className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              <item.icon className="h-4 w-4 text-[#2C5DFF]" />
-              {item.title}
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
 
 export function Navbar() {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -268,18 +35,12 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleToggle = (name: string) => {
-    setOpenDropdown(openDropdown === name ? null : name);
-  };
-
   // Transparent on home hero, solid when scrolled or on other pages
   const isDarkNav = isHome && !scrolled;
 
   const navBg = isDarkNav
     ? "bg-transparent border-transparent"
     : "bg-white/80 backdrop-blur-xl border-slate-200/60 shadow-sm";
-
-  const textColor = isDarkNav ? "text-white/90" : "text-slate-700";
 
   const logoTextColor = isDarkNav ? "text-white" : "text-slate-900";
 
@@ -310,56 +71,24 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-6 lg:flex">
-          <DesktopDropdown
-            label="Products"
-            items={products}
-            open={openDropdown === "products"}
-            onToggle={() => handleToggle("products")}
-            dark={isDarkNav}
-            featured={{
-              title: "See CaseScribe in Action",
-              description: "Book a live demo with our team",
-              href: "/demo",
-            }}
-          />
-          <DesktopDropdown
-            label="Solutions"
-            items={solutions}
-            open={openDropdown === "solutions"}
-            onToggle={() => handleToggle("solutions")}
-            dark={isDarkNav}
-          />
-          <DesktopDropdown
-            label="Resources"
-            items={resources}
-            open={openDropdown === "resources"}
-            onToggle={() => handleToggle("resources")}
-            dark={isDarkNav}
-            featured={{
-              title: "BVA Decision Search",
-              description: "Search thousands of Board decisions",
-              href: "/resources/bva-decisions",
-            }}
-          />
-          <Link
-            href="/pricing"
-            className={`text-sm font-medium transition-colors ${
-              pathname === "/pricing"
-                ? "text-[#2C5DFF]"
-                : isDarkNav
-                  ? "text-white/90 hover:text-white"
-                  : "text-slate-700 hover:text-slate-900"
-            }`}
-          >
-            Pricing
-          </Link>
-          <DesktopDropdown
-            label="About"
-            items={company}
-            open={openDropdown === "about"}
-            onToggle={() => handleToggle("about")}
-            dark={isDarkNav}
-          />
+          {navLinks.map((link) => {
+            const isActive = pathname.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-medium transition-colors ${
+                  isActive
+                    ? "text-[#2C5DFF]"
+                    : isDarkNav
+                      ? "text-white/90 hover:text-white"
+                      : "text-slate-700 hover:text-slate-900"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Desktop CTAs */}
@@ -406,33 +135,16 @@ export function Navbar() {
               Menu
             </SheetTitle>
             <div className="mt-6 space-y-1">
-              <MobileNavSection
-                label="Products"
-                items={products}
-                onClose={() => setMobileOpen(false)}
-              />
-              <MobileNavSection
-                label="Solutions"
-                items={solutions}
-                onClose={() => setMobileOpen(false)}
-              />
-              <MobileNavSection
-                label="Resources"
-                items={resources}
-                onClose={() => setMobileOpen(false)}
-              />
-              <Link
-                href="/pricing"
-                onClick={() => setMobileOpen(false)}
-                className="block py-2 text-base font-medium text-slate-900"
-              >
-                Pricing
-              </Link>
-              <MobileNavSection
-                label="About"
-                items={company}
-                onClose={() => setMobileOpen(false)}
-              />
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block py-2 text-base font-medium text-slate-900 hover:text-[#2C5DFF]"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
             <div className="mt-8 space-y-3">
               <Button variant="outline" className="w-full" asChild>
