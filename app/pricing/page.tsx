@@ -348,7 +348,7 @@ function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <Section className="bg-slate-50">
+    <Section className="bg-[#F8F8F6]">
       <SectionHeader eyebrow="FAQ" title="Frequently Asked Questions" />
       <div className="mx-auto mt-12 max-w-2xl space-y-2">
         {faqs.map((faq, i) => (

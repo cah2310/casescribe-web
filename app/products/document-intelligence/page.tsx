@@ -168,7 +168,7 @@ export default function DocumentIntelligencePage() {
       />
 
       {/* Pipeline */}
-      <Section className="bg-slate-50">
+      <Section className="bg-[#F8F8F6]">
         <SectionHeader
           eyebrow="How It Works"
           title="From Upload to Insight in Four Steps"
@@ -207,7 +207,7 @@ export default function DocumentIntelligencePage() {
       </Section>
 
       {/* Video placeholder */}
-      <Section className="bg-slate-50">
+      <Section className="bg-[#F8F8F6]">
         <div className="content-narrow">
           <VideoEmbed title="See Document Intelligence in action" />
         </div>

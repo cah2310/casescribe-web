@@ -19,7 +19,7 @@ export function CTABanner({
   secondaryHref = "/pricing",
 }: CTABannerProps) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+    <section className="relative overflow-hidden bg-gradient-to-r from-[#2C5DFF] via-[#0080A3] to-[#5CD4F4]">
       {/* Floating decorative elements */}
       <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
       <div className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
@@ -36,7 +36,7 @@ export function CTABanner({
           <Button
             size="lg"
             variant="secondary"
-            className="bg-white text-blue-600 shadow-lg shadow-black/10 hover:bg-blue-50"
+            className="bg-white text-[#2C5DFF] shadow-lg shadow-black/10 hover:bg-blue-50"
             asChild
           >
             <Link href={primaryHref}>{primaryLabel}</Link>

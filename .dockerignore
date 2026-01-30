@@ -1,0 +1,8 @@
+node_modules
+.next
+.git
+_imports
+.playwright-mcp
+*.md
+.DS_Store
+.env*

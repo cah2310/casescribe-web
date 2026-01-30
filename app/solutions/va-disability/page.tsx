@@ -143,7 +143,7 @@ export default function VADisabilityPage() {
       />
 
       {/* Workflow */}
-      <Section className="bg-slate-50">
+      <Section className="bg-[#F8F8F6]">
         <SectionHeader
           eyebrow="VA Disability Workflow"
           title="From C-File to Case Strategy in Minutes"
@@ -181,7 +181,7 @@ export default function VADisabilityPage() {
       </Section>
 
       {/* Video */}
-      <Section className="bg-slate-50">
+      <Section className="bg-[#F8F8F6]">
         <div className="content-narrow">
           <VideoEmbed title="See VA Disability processing in action" />
         </div>

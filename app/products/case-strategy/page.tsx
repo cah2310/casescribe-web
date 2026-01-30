@@ -176,7 +176,7 @@ export default function CaseStrategyPage() {
       </Section>
 
       {/* Video placeholder */}
-      <Section className="bg-slate-50">
+      <Section className="bg-[#F8F8F6]">
         <div className="content-narrow">
           <VideoEmbed title="See Case Strategy AI in action" />
         </div>

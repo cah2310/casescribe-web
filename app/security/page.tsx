@@ -103,7 +103,7 @@ export default function SecurityPage() {
       </Section>
 
       {/* Data handling */}
-      <Section className="bg-slate-50">
+      <Section className="bg-[#F8F8F6]">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-2xl font-bold text-slate-900">
             How We Handle Your Data

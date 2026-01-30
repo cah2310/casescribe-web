@@ -130,7 +130,7 @@ export default function AboutPage() {
       </Section>
 
       {/* Chad Hill — large, prominent section */}
-      <Section className="bg-slate-50">
+      <Section className="bg-[#F8F8F6]">
         <div className="mx-auto max-w-5xl">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             {/* Photo placeholder */}
@@ -241,7 +241,7 @@ export default function AboutPage() {
       </Section>
 
       {/* Values as large gradient cards */}
-      <Section className="bg-slate-50">
+      <Section className="bg-[#F8F8F6]">
         <SectionHeader eyebrow="Our Values" title="What We Stand For" />
         <div className="mt-12 grid gap-6 sm:grid-cols-3">
           {values.map((value) => (

@@ -36,10 +36,12 @@ import {
 /* ─── Hero ─── */
 function Hero() {
   return (
-    <section className="relative -mt-16 overflow-hidden bg-[#0a0f1e]">
+    <section className="relative -mt-16 overflow-hidden bg-[#1B2036]">
       {/* Background effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(59,130,246,0.15),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(44,93,255,0.12),transparent)]" />
       <div className="dot-grid absolute inset-0 opacity-30" />
+      {/* Chevron wave pattern */}
+      <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "url('/pattern-hero.svg')", backgroundPosition: "center bottom", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} />
 
       <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-32 sm:px-6 sm:pb-32 sm:pt-44 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
@@ -50,7 +52,7 @@ function Hero() {
             transition={{ duration: 0.5 }}
             className="mb-8 badge-hero"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#5CD4F4]" />
             Built by a 30-year disability law firm
           </motion.div>
 
@@ -84,7 +86,7 @@ function Hero() {
           >
             <Button
               size="lg"
-              className="glow-blue text-base shadow-lg shadow-blue-500/25 transition-shadow hover:shadow-blue-500/40"
+              className="glow-blue text-base shadow-lg shadow-[#2C5DFF]/25 transition-shadow hover:shadow-[#2C5DFF]/40"
               asChild
             >
               <Link href="/demo">
@@ -109,15 +111,15 @@ function Hero() {
             className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-slate-500"
           >
             <div className="flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-blue-500" />
+              <ShieldCheck className="h-4 w-4 text-[#5CD4F4]" />
               SOC 2 Type II Certified
             </div>
             <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-blue-500" />
+              <Users className="h-4 w-4 text-[#5CD4F4]" />
               Trusted by 50+ Law Firms
             </div>
             <div className="flex items-center gap-2">
-              <Lock className="h-4 w-4 text-blue-500" />
+              <Lock className="h-4 w-4 text-[#5CD4F4]" />
               Your Data, Your Control
             </div>
           </motion.div>
@@ -157,7 +159,7 @@ function Hero() {
       </div>
 
       {/* Logo marquee */}
-      <div className="relative border-t border-slate-800 bg-[#080c18] py-8">
+      <div className="relative border-t border-slate-800 bg-[#151929] py-8">
         <LogoMarquee />
       </div>
     </section>
@@ -218,7 +220,7 @@ function ProblemSection() {
 /* ─── Product Overview (Bento Grid) ─── */
 function ProductOverview() {
   return (
-    <Section className="bg-slate-50">
+    <Section className="bg-[#F8F8F6]">
       <SectionHeader
         eyebrow="Products"
         title="From Documents to Decisions"
@@ -527,8 +529,8 @@ function DifferenceSection() {
 /* ─── Metrics ─── */
 function MetricsSection() {
   return (
-    <section className="section-dark bg-slate-900 py-16 sm:py-24 grain-overlay">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,rgba(59,130,246,0.1),transparent)]" />
+    <section className="section-dark py-16 sm:py-24 grain-overlay">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,rgba(92,212,244,0.06),transparent)]" />
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {[
@@ -646,7 +648,7 @@ const trustPoints = [
 
 function TrustSection() {
   return (
-    <Section className="bg-slate-50">
+    <Section className="bg-[#F8F8F6]">
       <SectionHeader
         eyebrow="Trust & Security"
         title="Security You Can Stake Your Practice On"

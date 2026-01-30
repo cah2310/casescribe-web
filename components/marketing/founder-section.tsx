@@ -26,7 +26,7 @@ export function FounderSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-24">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#F8F8F6] to-white py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -39,7 +39,7 @@ export function FounderSection() {
           <div className="relative mx-auto max-w-md lg:mx-0">
             <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
               <div className="flex h-full flex-col items-center justify-center p-8 text-center">
-                <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-blue-500/20 text-3xl font-bold text-blue-400">
+                <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#2C5DFF]/20 text-3xl font-bold text-[#96AEFF]">
                   CH
                 </div>
                 <p className="text-lg font-semibold text-white">Chad Hill</p>
@@ -52,8 +52,8 @@ export function FounderSection() {
               </div>
             </div>
             {/* Decorative glow */}
-            <div className="absolute -bottom-4 -right-4 h-32 w-32 rounded-full bg-blue-500/10 blur-3xl" />
-            <div className="absolute -left-4 -top-4 h-24 w-24 rounded-full bg-indigo-500/10 blur-3xl" />
+            <div className="absolute -bottom-4 -right-4 h-32 w-32 rounded-full bg-[#2C5DFF]/10 blur-3xl" />
+            <div className="absolute -left-4 -top-4 h-24 w-24 rounded-full bg-[#0080A3]/10 blur-3xl" />
           </div>
 
           {/* Content */}
@@ -64,7 +64,7 @@ export function FounderSection() {
             <h2 className="mt-3 heading-section">
               Built by Someone Who&apos;s Done the Work
             </h2>
-            <blockquote className="mt-6 border-l-2 border-blue-500 pl-4 text-lg italic text-slate-600">
+            <blockquote className="mt-6 border-l-2 border-[#2C5DFF] pl-4 text-lg italic text-slate-600">
               &ldquo;I&apos;ve spent my career at the intersection of disability
               law and technology. CaseScribe exists because I saw firsthand how
               much opportunity gets buried in paperwork.&rdquo;
@@ -84,7 +84,7 @@ export function FounderSection() {
                   key={cred.label}
                   className="badge-credential"
                 >
-                  <cred.icon className="h-4 w-4 text-blue-600" />
+                  <cred.icon className="h-4 w-4 text-[#2C5DFF]" />
                   {cred.label}
                 </div>
               ))}
@@ -104,9 +104,9 @@ export function FounderSection() {
             <div className="mt-8 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
               <div className="flex h-48 items-center justify-center">
                 <div className="text-center">
-                  <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600/10">
+                  <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#2C5DFF]/10">
                     <svg
-                      className="h-5 w-5 text-blue-600"
+                      className="h-5 w-5 text-[#2C5DFF]"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >

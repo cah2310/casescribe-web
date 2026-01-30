@@ -104,7 +104,7 @@ export default function WorkersCompPage() {
       />
 
       {/* Features */}
-      <Section className="bg-slate-50">
+      <Section className="bg-[#F8F8F6]">
         <SectionHeader
           eyebrow="Capabilities"
           title="Built for Workers' Compensation"
@@ -131,7 +131,7 @@ export default function WorkersCompPage() {
       </Section>
 
       {/* How it helps */}
-      <Section className="bg-slate-50">
+      <Section className="bg-[#F8F8F6]">
         <div className="content-narrow">
           <h2 className="heading-section-dark text-slate-900 sm:text-3xl">
             How CaseScribe Helps WC Practices
