@@ -6,7 +6,7 @@ import {
   type InferUITools,
   type UIDataTypes,
 } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
+import { google } from "@ai-sdk/google";
 import { bvaTools } from "@/lib/bva/tools";
 import { BVA_SYSTEM_PROMPT } from "@/lib/bva/system-prompt";
 
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     const { messages }: { messages: BVAChatMessage[] } = await req.json();
 
     const result = streamText({
-      model: anthropic("claude-3-5-haiku-20241022"),
+      model: google("gemini-3-flash-preview"),
       system: BVA_SYSTEM_PROMPT,
       messages: await convertToModelMessages(messages),
       tools: bvaTools,
