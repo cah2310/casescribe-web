@@ -4,17 +4,25 @@ import type { UIMessage } from "ai";
 import { ResultsCaseList } from "./ResultsCaseList";
 import { ResultsAnalysis } from "./ResultsAnalysis";
 import { ResultsShowcase } from "./ResultsShowcase";
+import { ResultsFilterState } from "./ResultsFilterState";
 
 interface ResultsPanelProps {
   messages: UIMessage[];
   onCaseClick: (caseId: string) => void;
 }
 
+interface FilterStateData {
+  total: number;
+  filters_applied: Record<string, string>;
+}
+
 /**
  * Extracts the latest relevant tool output from messages to display in the results panel.
- * Scans messages in reverse to find the most recent fetchCases, analyzePatterns, or analyzeCaseText output.
+ * Pass 1: scan for high-priority results (fetchCases, analyzePatterns, analyzeCaseText).
+ * Pass 2: if nothing found, scan for applyFilters to show intermediate filter state.
  */
 function getLatestResult(messages: UIMessage[]) {
+  // Pass 1 — high priority: cases or analysis
   for (let i = messages.length - 1; i >= 0; i--) {
     const msg = messages[i];
     if (msg.role !== "assistant") continue;
@@ -33,6 +41,21 @@ function getLatestResult(messages: UIMessage[]) {
       }
     }
   }
+
+  // Pass 2 — low priority: filter state (only if Pass 1 found nothing)
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const msg = messages[i];
+    if (msg.role !== "assistant") continue;
+    for (let j = msg.parts.length - 1; j >= 0; j--) {
+      const part = msg.parts[j] as { type: string; state?: string; output?: unknown };
+      if (part.state !== "output-available") continue;
+
+      if (part.type === "tool-applyFilters" && part.output) {
+        return { type: "filterState" as const, data: part.output as FilterStateData };
+      }
+    }
+  }
+
   return null;
 }
 
@@ -74,6 +97,15 @@ export function ResultsPanel({ messages, onCaseClick }: ResultsPanelProps) {
       <ResultsAnalysis
         analysis={latest.data.analysis}
         question={latest.data.question}
+      />
+    );
+  }
+
+  if (latest.type === "filterState") {
+    return (
+      <ResultsFilterState
+        total={latest.data.total}
+        filtersApplied={latest.data.filters_applied}
       />
     );
   }
