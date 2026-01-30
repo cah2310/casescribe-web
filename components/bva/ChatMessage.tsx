@@ -26,7 +26,7 @@ export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
           if (part.type === "text") {
             const segments = parseCitations(part.text);
             return (
-              <div key={i} className="prose prose-sm max-w-none prose-slate">
+              <div key={i} className={`prose prose-sm max-w-none ${isUser ? "prose-invert" : "prose-slate"}`}>
                 {segments.map((seg, j) =>
                   seg.type === "text" ? (
                     <span key={j} className="whitespace-pre-wrap">
