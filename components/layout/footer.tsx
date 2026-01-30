@@ -22,6 +22,8 @@ const footerLinks = {
   Company: [
     { label: "About", href: "/about" },
     { label: "Security", href: "/security" },
+    { label: "Status", href: "https://status.casescribe.ai", external: true },
+    { label: "Trust Center", href: "https://app.vanta.com/c/casescribe.ai/trust-center/view", external: true },
     { label: "Contact", href: "/contact" },
     { label: "Book a Demo", href: "/demo" },
   ],
@@ -79,12 +81,23 @@ export function Footer() {
               <ul className="mt-3 space-y-2">
                 {links.map((link) => (
                   <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-slate-400 hover:text-[#5CD4F4] transition-colors"
-                    >
-                      {link.label}
-                    </Link>
+                    {"external" in link && link.external ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-slate-400 hover:text-[#5CD4F4] transition-colors"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="text-sm text-slate-400 hover:text-[#5CD4F4] transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -94,10 +107,25 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-700/50 pt-8 sm:flex-row">
-          <p className="text-xs text-slate-500">
-            &copy; {new Date().getFullYear()} CaseScribe AI. All rights
-            reserved.
-          </p>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://app.vanta.com/c/casescribe.ai/trust-center/view"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="/soc2-badge.png"
+                alt="SOC 2 Type II Certified"
+                width={24}
+                height={24}
+                className="h-6 w-auto opacity-60 hover:opacity-100 transition-opacity"
+              />
+            </a>
+            <p className="text-xs text-slate-500">
+              &copy; {new Date().getFullYear()} CaseScribe AI. All rights
+              reserved.
+            </p>
+          </div>
           <div className="flex gap-6">
             <Link
               href="/privacy"

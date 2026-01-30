@@ -13,6 +13,7 @@ import { BentoGrid, BentoCard } from "@/components/marketing/bento-grid";
 import { FounderSection } from "@/components/marketing/founder-section";
 import { FadeIn } from "@/components/marketing/fade-in";
 import { DarkSection } from "@/components/marketing/dark-section";
+import Image from "next/image";
 import {
   FileStack,
   SearchX,
@@ -30,6 +31,7 @@ import {
   Lock,
   Database,
   ArrowRight,
+  ExternalLink,
   Zap,
 } from "lucide-react";
 
@@ -645,6 +647,7 @@ const trustPoints = [
       "Enterprise-grade security controls audited by independent assessors.",
     iconBg: "bg-accent-blue",
     iconText: "text-accent-blue",
+    badge: true,
   },
   {
     icon: Users,
@@ -684,9 +687,26 @@ function TrustSection() {
         {trustPoints.map((point, i) => (
           <FadeIn key={point.title} delay={i * 0.1}>
             <div className="card-light-hover text-center">
-              <div className={`mx-auto icon-box-md ${point.iconBg}`}>
-                <point.icon className={`h-6 w-6 ${point.iconText}`} />
-              </div>
+              {"badge" in point && point.badge ? (
+                <a
+                  href="https://app.vanta.com/c/casescribe.ai/trust-center/view"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mx-auto block"
+                >
+                  <Image
+                    src="/soc2-badge.png"
+                    alt="SOC 2 Type II Certified"
+                    width={80}
+                    height={80}
+                    className="mx-auto h-16 w-auto"
+                  />
+                </a>
+              ) : (
+                <div className={`mx-auto icon-box-md ${point.iconBg}`}>
+                  <point.icon className={`h-6 w-6 ${point.iconText}`} />
+                </div>
+              )}
               <h3 className="mt-4 text-sm font-semibold text-slate-900">
                 {point.title}
               </h3>
@@ -696,6 +716,35 @@ function TrustSection() {
             </div>
           </FadeIn>
         ))}
+      </div>
+
+      {/* External trust links */}
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+        <a
+          href="https://app.vanta.com/c/casescribe.ai/trust-center/view"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-700"
+        >
+          View Trust Profile
+          <ExternalLink className="h-3.5 w-3.5" />
+        </a>
+        <a
+          href="https://status.casescribe.ai"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-700"
+        >
+          System Status
+          <ExternalLink className="h-3.5 w-3.5" />
+        </a>
+        <Link
+          href="/security"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-700"
+        >
+          Security Details
+          <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
       </div>
     </Section>
   );

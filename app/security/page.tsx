@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Section, SectionHeader } from "@/components/marketing/section";
 import { CTABanner } from "@/components/marketing/cta-banner";
+import Image from "next/image";
 import {
   ShieldCheck,
   Lock,
@@ -10,6 +11,7 @@ import {
   Eye,
   KeyRound,
   FileText,
+  ExternalLink,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -85,6 +87,45 @@ export default function SecurityPage() {
           title="Enterprise-Grade Security for Sensitive Legal Data"
           description="We handle your clients' most sensitive information. Our security practices reflect that responsibility."
         />
+
+        {/* Trust badges row */}
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-8 rounded-xl border bg-white p-6">
+          <a
+            href="https://app.vanta.com/c/casescribe.ai/trust-center/view"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0"
+          >
+            <Image
+              src="/soc2-badge.png"
+              alt="SOC 2 Type II Certified"
+              width={100}
+              height={100}
+              className="h-20 w-auto"
+            />
+          </a>
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-6">
+            <a
+              href="https://app.vanta.com/c/casescribe.ai/trust-center/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700"
+            >
+              View Trust Profile
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://status.casescribe.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700"
+            >
+              System Status
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
+
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {securityFeatures.map((feature) => (
             <div key={feature.title} className="rounded-xl border bg-white p-6">
