@@ -119,8 +119,8 @@ export default function ResourcesPage() {
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100">
                     <Search className="h-5 w-5 text-blue-600" />
                   </div>
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
-                    Coming Soon
+                  <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+                    Beta
                   </span>
                 </div>
 
@@ -150,9 +150,14 @@ export default function ResourcesPage() {
                   ))}
                 </ul>
 
-                <p className="mt-5 text-xs text-slate-500">
-                  Free access — no account required.
-                </p>
+                <div className="mt-6">
+                  <Button asChild>
+                    <Link href="/explore">
+                      Try Beta
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
               </GlowCard>
             </FadeIn>
 
