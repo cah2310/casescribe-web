@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     const { messages }: { messages: BVAChatMessage[] } = await req.json();
 
     const result = streamText({
-      model: anthropic("claude-sonnet-4-20250514"),
+      model: anthropic("claude-3-5-haiku-20241022"),
       system: BVA_SYSTEM_PROMPT,
       messages: await convertToModelMessages(messages),
       tools: bvaTools,
