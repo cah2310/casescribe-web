@@ -75,7 +75,7 @@ function Hero() {
             className="mx-auto mt-8 max-w-2xl text-lg text-slate-400 sm:text-xl"
           >
             Document intelligence and case strategy AI built by disability law
-            experts. Process 500 pages in 10 minutes. Find what others miss.
+            experts. Process 5,000 pages in 10 minutes. Find what others miss.
           </motion.p>
 
           <motion.div
@@ -346,7 +346,7 @@ function ProductOverview() {
             </div>
             <p className="mt-4 text-4xl font-bold text-slate-900">10 min</p>
             <p className="mt-1 text-sm text-slate-500">
-              To process 500 pages
+              To process 5,000 pages
             </p>
           </BentoCard>
 
@@ -449,7 +449,7 @@ const comparisonRows = [
   {
     feature: "Processing speed",
     them: "30-60 min/case",
-    us: "10 minutes for 500 pages",
+    us: "10 minutes for 5,000 pages",
   },
   {
     feature: "AI depth",

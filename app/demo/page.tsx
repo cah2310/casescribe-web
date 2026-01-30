@@ -73,7 +73,7 @@ export default function DemoPage() {
 
           <ul className="mt-6 space-y-2">
             {[
-              "Process 500 pages in 10 minutes",
+              "Process 5,000 pages in 10 minutes",
               "AI-powered condition detection & case strategy",
               "$85/case with no contracts",
               "SOC 2 Type II certified",

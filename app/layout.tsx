@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | CaseScribe AI",
   },
   description:
-    "AI-powered document intelligence and case strategy for disability law firms. Process 500 pages in 10 minutes. SOC 2 Type II certified. $85/case, no contracts.",
+    "AI-powered document intelligence and case strategy for disability law firms. Process 5,000 pages in 10 minutes. SOC 2 Type II certified. $85/case, no contracts.",
   icons: {
     icon: "/favicon.png",
   },
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "CaseScribe AI",
     title: "CaseScribe AI — AI That Finds Opportunities, Not Just Facts",
     description:
-      "AI-powered document intelligence and case strategy for disability law firms. Process 500 pages in 10 minutes.",
+      "AI-powered document intelligence and case strategy for disability law firms. Process 5,000 pages in 10 minutes.",
   },
   twitter: {
     card: "summary_large_image",

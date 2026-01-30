@@ -19,7 +19,7 @@ import {
 export const metadata: Metadata = {
   title: "Document Intelligence",
   description:
-    "Process 500+ pages in 10 minutes. AI-powered OCR, classification, and data extraction for 150+ legal document types.",
+    "Process 5,000+ pages in 10 minutes. AI-powered OCR, classification, and data extraction for 150+ legal document types.",
 };
 
 const pipeline = [
@@ -76,7 +76,7 @@ const features = [
     icon: Clock,
     title: "10 Minutes, Not 10 Hours",
     description:
-      "What takes a reviewer 2-10 hours, CaseScribe processes in under 10 minutes for a 500-page file.",
+      "What takes a reviewer 2-10 hours, CaseScribe processes in under 10 minutes for a 5,000-page file.",
   },
 ];
 
@@ -87,7 +87,7 @@ const beforeAfter = [
   },
   {
     before: "2-10 hours per C-file review",
-    after: "10 minutes for 500+ pages",
+    after: "10 minutes for 5,000+ pages",
   },
   {
     before: "Missed documents in large files",
@@ -156,7 +156,7 @@ export default function DocumentIntelligencePage() {
     <>
       <ProductHero
         icon={FileText}
-        title="Process 500 Pages in 10 Minutes"
+        title="Process 5,000 Pages in 10 Minutes"
         description="AI-powered document intelligence that ingests, OCRs, classifies, and extracts key data from 150+ document types. Stop reading. Start deciding."
         gradient="from-blue-500 to-indigo-600"
         bgGradient="from-blue-50 via-white to-white"
