@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { BarChart3, ChevronDown, ChevronUp } from "lucide-react";
 
 interface InlineAnalysisProps {
@@ -37,8 +38,8 @@ export function InlineAnalysis({ analysis, question }: InlineAnalysisProps) {
       </button>
       {!collapsed && (
         <div className="px-3 py-2.5">
-          <div className="prose prose-sm prose-slate max-w-none whitespace-pre-wrap text-xs leading-relaxed text-slate-700">
-            {analysis}
+          <div className="prose prose-sm prose-slate max-w-none text-xs leading-relaxed text-slate-700">
+            <ReactMarkdown>{analysis}</ReactMarkdown>
           </div>
         </div>
       )}

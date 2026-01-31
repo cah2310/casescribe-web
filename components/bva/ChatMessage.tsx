@@ -1,6 +1,7 @@
 "use client";
 
 import type { UIMessage } from "ai";
+import ReactMarkdown from "react-markdown";
 import { CitationLink } from "./CitationLink";
 import { ToolCallIndicator } from "./ToolCallIndicator";
 import { InlineCaseList } from "./InlineCaseList";
@@ -25,7 +26,10 @@ interface ChatMessageProps {
   onUnpinCase: (caseId: string) => void;
 }
 
-import { parseCitations } from "@/lib/bva/citations";
+/** Convert [[case_id]] citations to markdown links with a cite: scheme */
+function prepareCitations(text: string): string {
+  return text.replace(/\[\[([^\]]+)\]\]/g, "[$1](cite:$1)");
+}
 
 export function ChatMessage({
   message,
@@ -47,22 +51,31 @@ export function ChatMessage({
       >
         {message.parts.map((part, i) => {
           if (part.type === "text") {
-            const segments = parseCitations(part.text);
+            const md = prepareCitations(part.text);
             return (
               <div key={i} className={`prose prose-sm max-w-none ${isUser ? "prose-invert" : "prose-slate"}`}>
-                {segments.map((seg, j) =>
-                  seg.type === "text" ? (
-                    <span key={j} className="whitespace-pre-wrap">
-                      {seg.content}
-                    </span>
-                  ) : (
-                    <CitationLink
-                      key={j}
-                      caseId={seg.caseId}
-                      onClick={() => onCaseClick(seg.caseId)}
-                    />
-                  ),
-                )}
+                <ReactMarkdown
+                  components={{
+                    a: ({ href, children }) => {
+                      if (href?.startsWith("cite:")) {
+                        const caseId = href.slice(5);
+                        return (
+                          <CitationLink
+                            caseId={caseId}
+                            onClick={() => onCaseClick(caseId)}
+                          />
+                        );
+                      }
+                      return (
+                        <a href={href} target="_blank" rel="noopener noreferrer">
+                          {children}
+                        </a>
+                      );
+                    },
+                  }}
+                >
+                  {md}
+                </ReactMarkdown>
               </div>
             );
           }
