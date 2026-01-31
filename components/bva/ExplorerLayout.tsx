@@ -1,14 +1,25 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { ChatPanel } from "./ChatPanel";
-import { ResultsPanel } from "./ResultsPanel";
-import { CaseDetailDrawer } from "./CaseDetailDrawer";
+import { WorkspacePanel } from "./WorkspacePanel";
+import { CaseDetailModal } from "./CaseDetailModal";
 import { ReportBar } from "./ReportBar";
 import { GradientText } from "@/components/marketing/gradient-text";
 import type { BVAChatMessage } from "@/app/api/bva/chat/route";
+import type { PinnedCase } from "./WorkspaceCaseCard";
+
+interface CaseSummary {
+  case_id: string;
+  outcome?: string | null;
+  general_condition_38?: string | null;
+  specific_condition_38?: string | null;
+  judge_canonical?: string | null;
+  year?: number | null;
+  case_summary?: string | null;
+}
 
 export function ExplorerLayout() {
   const { messages, sendMessage, status } = useChat<BVAChatMessage>({
@@ -16,10 +27,75 @@ export function ExplorerLayout() {
   });
 
   const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
-  const [showResults, setShowResults] = useState(false);
+  const [showWorkspace, setShowWorkspace] = useState(false);
+  const [pinnedCases, setPinnedCases] = useState<Map<string, PinnedCase>>(new Map());
+
+  const pinnedCaseIds = useMemo(
+    () => new Set(pinnedCases.keys()),
+    [pinnedCases]
+  );
 
   const handleCaseClick = useCallback((caseId: string) => {
     setSelectedCaseId(caseId);
+  }, []);
+
+  const handlePinCase = useCallback((pinnedCase: PinnedCase) => {
+    setPinnedCases((prev) => {
+      const next = new Map(prev);
+      next.set(pinnedCase.case_id, pinnedCase);
+      return next;
+    });
+  }, []);
+
+  const handlePinFromChat = useCallback((caseData: CaseSummary) => {
+    const pinned: PinnedCase = {
+      case_id: caseData.case_id,
+      outcome: caseData.outcome ?? null,
+      condition:
+        caseData.specific_condition_38 ??
+        caseData.general_condition_38 ??
+        null,
+      judge: caseData.judge_canonical ?? null,
+      year: caseData.year ?? null,
+      summary: caseData.case_summary ?? null,
+      note: "",
+      pinnedAt: Date.now(),
+    };
+    handlePinCase(pinned);
+  }, [handlePinCase]);
+
+  const handleUnpinCase = useCallback((caseId: string) => {
+    setPinnedCases((prev) => {
+      const next = new Map(prev);
+      next.delete(caseId);
+      return next;
+    });
+  }, []);
+
+  const handleUpdateNote = useCallback((caseId: string, note: string) => {
+    setPinnedCases((prev) => {
+      const existing = prev.get(caseId);
+      if (!existing) return prev;
+      const next = new Map(prev);
+      next.set(caseId, { ...existing, note });
+      return next;
+    });
+  }, []);
+
+  const handleFindSimilar = useCallback(
+    (caseId: string, condition: string | null) => {
+      const conditionText = condition ? ` (${condition})` : "";
+      sendMessage({
+        text: `Find cases similar to ${caseId}${conditionText}. Look for decisions with similar conditions, outcomes, and legal reasoning.`,
+      });
+      setSelectedCaseId(null);
+      setShowWorkspace(false);
+    },
+    [sendMessage]
+  );
+
+  const handleClearWorkspace = useCallback(() => {
+    setPinnedCases(new Map());
   }, []);
 
   return (
@@ -45,22 +121,27 @@ export function ExplorerLayout() {
           </span>
         </div>
         <div className="relative flex items-center gap-2">
-          {/* Mobile results toggle */}
+          {/* Mobile workspace toggle */}
           <button
-            onClick={() => setShowResults(!showResults)}
-            className="rounded-md bg-white/10 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/20 lg:hidden"
+            onClick={() => setShowWorkspace(!showWorkspace)}
+            className="flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/20 lg:hidden"
           >
-            {showResults ? "Chat" : "Results"}
+            {showWorkspace ? "Chat" : "Workspace"}
+            {!showWorkspace && pinnedCases.size > 0 && (
+              <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-blue-500 px-1 text-[10px] font-bold text-white">
+                {pinnedCases.size}
+              </span>
+            )}
           </button>
         </div>
       </header>
 
       {/* Main content */}
       <div className="flex min-h-0 flex-1">
-        {/* Chat panel */}
+        {/* Chat panel — primary, takes remaining space */}
         <div
-          className={`flex w-full flex-col border-r border-slate-200/60 bg-white lg:w-[440px] lg:shrink-0 ${
-            showResults ? "hidden lg:flex" : "flex"
+          className={`flex w-full flex-1 flex-col bg-white ${
+            showWorkspace ? "hidden lg:flex" : "flex"
           }`}
         >
           <ChatPanel
@@ -68,32 +149,41 @@ export function ExplorerLayout() {
             sendMessage={sendMessage}
             status={status}
             onCaseClick={handleCaseClick}
+            pinnedCaseIds={pinnedCaseIds}
+            onPinCase={handlePinFromChat}
+            onUnpinCase={handleUnpinCase}
           />
         </div>
 
-        {/* Results panel */}
+        {/* Workspace panel — sidebar */}
         <div
-          className={`flex-1 ${
-            showResults ? "flex" : "hidden lg:flex"
+          className={`w-full border-l border-slate-200/60 lg:w-[380px] lg:shrink-0 ${
+            showWorkspace ? "flex" : "hidden lg:flex"
           } flex-col overflow-hidden`}
         >
-          <ResultsPanel
-            messages={messages}
-            onCaseClick={handleCaseClick}
+          <WorkspacePanel
+            pinnedCases={pinnedCases}
+            onView={handleCaseClick}
+            onFindSimilar={handleFindSimilar}
+            onRemove={handleUnpinCase}
+            onUpdateNote={handleUpdateNote}
+            onClear={handleClearWorkspace}
           />
         </div>
       </div>
 
       {/* Report bar */}
-      <ReportBar messages={messages} />
+      <ReportBar messages={messages} pinnedCases={pinnedCases} />
 
-      {/* Case detail drawer */}
-      {selectedCaseId && (
-        <CaseDetailDrawer
-          caseId={selectedCaseId}
-          onClose={() => setSelectedCaseId(null)}
-        />
-      )}
+      {/* Case detail modal */}
+      <CaseDetailModal
+        caseId={selectedCaseId}
+        onClose={() => setSelectedCaseId(null)}
+        isPinned={selectedCaseId ? pinnedCaseIds.has(selectedCaseId) : false}
+        onPin={handlePinCase}
+        onUnpin={handleUnpinCase}
+        onFindSimilar={handleFindSimilar}
+      />
     </div>
   );
 }

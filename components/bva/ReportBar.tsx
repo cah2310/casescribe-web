@@ -3,12 +3,14 @@
 import { Download, Copy, Check } from "lucide-react";
 import { useState } from "react";
 import type { UIMessage } from "ai";
+import type { PinnedCase } from "./WorkspaceCaseCard";
 
 interface ReportBarProps {
   messages: UIMessage[];
+  pinnedCases: Map<string, PinnedCase>;
 }
 
-export function ReportBar({ messages }: ReportBarProps) {
+export function ReportBar({ messages, pinnedCases }: ReportBarProps) {
   const [copied, setCopied] = useState(false);
 
   if (messages.length === 0) return null;
@@ -25,6 +27,20 @@ export function ReportBar({ messages }: ReportBarProps) {
       }
       lines.push("");
     }
+
+    // Pinned cases section
+    if (pinnedCases.size > 0) {
+      lines.push("---\n");
+      lines.push("## Pinned Cases\n");
+      for (const c of pinnedCases.values()) {
+        lines.push(`- **${c.case_id}** — ${c.condition || "Unknown Condition"} (${c.outcome || "Unknown"})${c.judge ? ` — ${c.judge}` : ""}${c.year ? `, ${c.year}` : ""}`);
+        if (c.note) {
+          lines.push(`  - Note: ${c.note}`);
+        }
+      }
+      lines.push("");
+    }
+
     return lines.join("\n");
   };
 

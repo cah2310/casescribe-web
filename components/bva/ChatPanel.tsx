@@ -6,11 +6,24 @@ import { ChatInput } from "./ChatInput";
 import { ResultsEmpty } from "./ResultsEmpty";
 import type { UIMessage } from "ai";
 
+interface CaseSummary {
+  case_id: string;
+  outcome?: string | null;
+  general_condition_38?: string | null;
+  specific_condition_38?: string | null;
+  judge_canonical?: string | null;
+  year?: number | null;
+  case_summary?: string | null;
+}
+
 interface ChatPanelProps {
   messages: UIMessage[];
   sendMessage: (msg: { text: string }) => void;
   status: string;
   onCaseClick: (caseId: string) => void;
+  pinnedCaseIds: Set<string>;
+  onPinCase: (caseData: CaseSummary) => void;
+  onUnpinCase: (caseId: string) => void;
 }
 
 export function ChatPanel({
@@ -18,6 +31,9 @@ export function ChatPanel({
   sendMessage,
   status,
   onCaseClick,
+  pinnedCaseIds,
+  onPinCase,
+  onUnpinCase,
 }: ChatPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -35,12 +51,15 @@ export function ChatPanel({
         {isEmpty ? (
           <ResultsEmpty onSuggestionClick={(q) => sendMessage({ text: q })} />
         ) : (
-          <div className="space-y-4">
+          <div className="mx-auto max-w-3xl space-y-4">
             {messages.map((message) => (
               <ChatMessage
                 key={message.id}
                 message={message}
                 onCaseClick={onCaseClick}
+                pinnedCaseIds={pinnedCaseIds}
+                onPinCase={onPinCase}
+                onUnpinCase={onUnpinCase}
               />
             ))}
           </div>

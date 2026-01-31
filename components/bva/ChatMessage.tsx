@@ -3,14 +3,37 @@
 import type { UIMessage } from "ai";
 import { CitationLink } from "./CitationLink";
 import { ToolCallIndicator } from "./ToolCallIndicator";
-import { parseCitations } from "@/lib/bva/citations";
+import { InlineCaseList } from "./InlineCaseList";
+import { InlineAnalysis } from "./InlineAnalysis";
+import { InlineFilterState } from "./InlineFilterState";
+
+interface CaseSummary {
+  case_id: string;
+  outcome?: string | null;
+  general_condition_38?: string | null;
+  specific_condition_38?: string | null;
+  judge_canonical?: string | null;
+  year?: number | null;
+  case_summary?: string | null;
+}
 
 interface ChatMessageProps {
   message: UIMessage;
   onCaseClick: (caseId: string) => void;
+  pinnedCaseIds: Set<string>;
+  onPinCase: (caseData: CaseSummary) => void;
+  onUnpinCase: (caseId: string) => void;
 }
 
-export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
+import { parseCitations } from "@/lib/bva/citations";
+
+export function ChatMessage({
+  message,
+  onCaseClick,
+  pinnedCaseIds,
+  onPinCase,
+  onUnpinCase,
+}: ChatMessageProps) {
   const isUser = message.role === "user";
 
   return (
@@ -44,9 +67,60 @@ export function ChatMessage({ message, onCaseClick }: ChatMessageProps) {
             );
           }
 
-          // Tool parts: show loading indicator or brief result summary
+          // Tool parts: render inline results for completed tools, indicators for others
           if (part.type.startsWith("tool-")) {
-            const toolPart = part as { type: string; state: string; toolName?: string };
+            const toolPart = part as { type: string; state: string; toolName?: string; output?: unknown };
+
+            // Render inline results for completed tool calls
+            if (toolPart.state === "output-available" && toolPart.output) {
+              if (toolPart.type === "tool-fetchCases") {
+                const data = toolPart.output as { cases: CaseSummary[]; total: number };
+                if (data.cases && data.cases.length > 0) {
+                  return (
+                    <InlineCaseList
+                      key={i}
+                      cases={data.cases}
+                      total={data.total}
+                      pinnedCaseIds={pinnedCaseIds}
+                      onCaseClick={onCaseClick}
+                      onPinCase={onPinCase}
+                      onUnpinCase={onUnpinCase}
+                    />
+                  );
+                }
+              }
+
+              if (
+                toolPart.type === "tool-analyzePatterns" ||
+                toolPart.type === "tool-analyzeCaseText"
+              ) {
+                const data = toolPart.output as { analysis: string; question: string };
+                if (data.analysis) {
+                  return (
+                    <InlineAnalysis
+                      key={i}
+                      analysis={data.analysis}
+                      question={data.question}
+                    />
+                  );
+                }
+              }
+
+              if (toolPart.type === "tool-applyFilters") {
+                const data = toolPart.output as { total: number; filters_applied: Record<string, string> };
+                if (data.total !== undefined) {
+                  return (
+                    <InlineFilterState
+                      key={i}
+                      total={data.total}
+                      filtersApplied={data.filters_applied}
+                    />
+                  );
+                }
+              }
+            }
+
+            // Default: show tool call indicator for in-progress/other states
             return (
               <ToolCallIndicator
                 key={i}

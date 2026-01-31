@@ -68,9 +68,9 @@ export function CaseDetailView({ detail }: CaseDetailViewProps) {
           <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
             Full Decision Text
           </h4>
-          <pre className="mt-2 max-h-[500px] overflow-y-auto rounded-lg bg-slate-50 p-4 text-xs leading-relaxed text-slate-700">
+          <div className="mt-2 whitespace-pre-wrap break-words rounded-lg bg-slate-50 p-4 text-sm leading-relaxed text-slate-700">
             {full_text}
-          </pre>
+          </div>
         </div>
       )}
     </div>
