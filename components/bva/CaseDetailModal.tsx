@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { Loader2, Pin, PinOff, Search } from "lucide-react";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import { CaseDetailView } from "./CaseDetailView";
 import type { PinnedCase } from "./WorkspaceCaseCard";
 
@@ -91,19 +91,20 @@ export function CaseDetailModal({
   };
 
   return (
-    <Dialog open={!!caseId} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent
-        className="flex h-[85vh] max-h-[85vh] flex-col gap-0 p-0 sm:max-w-4xl"
+    <Sheet open={!!caseId} onOpenChange={(open) => !open && onClose()}>
+      <SheetContent
+        side="right"
+        className="flex h-full w-full flex-col gap-0 p-0 sm:max-w-2xl"
         showCloseButton
       >
-        <DialogHeader className="shrink-0 border-b border-slate-200 px-6 py-4">
-          <DialogTitle className="text-sm font-semibold text-slate-900">
+        <SheetHeader className="shrink-0 border-b border-slate-200 px-6 py-4">
+          <SheetTitle className="text-sm font-semibold text-slate-900">
             Case: {caseId}
-          </DialogTitle>
-          <DialogDescription className="sr-only">
+          </SheetTitle>
+          <SheetDescription className="sr-only">
             Full detail view for BVA case {caseId}
-          </DialogDescription>
-        </DialogHeader>
+          </SheetDescription>
+        </SheetHeader>
 
         {/* Scrollable body */}
         <div className="flex-1 overflow-y-auto">
@@ -147,7 +148,7 @@ export function CaseDetailModal({
             )}
           </div>
         )}
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }
