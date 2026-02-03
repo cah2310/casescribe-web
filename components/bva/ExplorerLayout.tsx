@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import { Plus } from "lucide-react";
 import { ChatPanel } from "./ChatPanel";
 import { WorkspacePanel } from "./WorkspacePanel";
 import { CaseDetailModal } from "./CaseDetailModal";
@@ -22,9 +23,13 @@ interface CaseSummary {
 }
 
 export function ExplorerLayout() {
-  const { messages, sendMessage, status } = useChat<BVAChatMessage>({
+  const { messages, sendMessage, status, setMessages } = useChat<BVAChatMessage>({
     transport: new DefaultChatTransport({ api: "/api/bva/chat" }),
   });
+
+  const handleNewChat = useCallback(() => {
+    setMessages([]);
+  }, [setMessages]);
 
   const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
   const [showWorkspace, setShowWorkspace] = useState(false);
@@ -121,6 +126,15 @@ export function ExplorerLayout() {
           </span>
         </div>
         <div className="relative flex items-center gap-2">
+          {/* New Chat button */}
+          <button
+            onClick={handleNewChat}
+            className="flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/20"
+            title="Start new chat"
+          >
+            <Plus className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">New Chat</span>
+          </button>
           {/* Mobile workspace toggle */}
           <button
             onClick={() => setShowWorkspace(!showWorkspace)}
