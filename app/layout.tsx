@@ -15,11 +15,11 @@ const epilogue = Epilogue({
 
 export const metadata: Metadata = {
   title: {
-    default: "CaseScribe AI — AI That Finds Opportunities, Not Just Facts",
+    default: "CaseScribe AI — Turn C-Files Into Case Strategy",
     template: "%s | CaseScribe AI",
   },
   description:
-    "AI-powered document intelligence and case strategy for disability law firms. Process 5,000 pages in 10 minutes. SOC 2 Type II certified. $85/case, no contracts.",
+    "AI for veterans disability law firms. Upload a 5,000-page C-file and get secondary conditions, 3.156(c) opportunities, and a medical timeline in 10 minutes. $85/case.",
   icons: {
     icon: "/favicon.png",
   },
@@ -29,15 +29,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://casescribe.ai",
     siteName: "CaseScribe AI",
-    title: "CaseScribe AI — AI That Finds Opportunities, Not Just Facts",
+    title: "CaseScribe AI — Turn C-Files Into Case Strategy",
     description:
-      "AI-powered document intelligence and case strategy for disability law firms. Process 5,000 pages in 10 minutes.",
+      "AI for veterans disability law firms. Upload a C-file, get secondary conditions, 3.156(c) opportunities, and a medical timeline in minutes.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "CaseScribe AI — AI That Finds Opportunities, Not Just Facts",
+    title: "CaseScribe AI — Turn C-Files Into Case Strategy",
     description:
-      "AI-powered document intelligence and case strategy for disability law firms.",
+      "AI for veterans disability law firms. Upload a C-file, get secondary conditions, 3.156(c) opportunities, and a medical timeline in minutes.",
   },
 };
 

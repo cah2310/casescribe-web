@@ -55,7 +55,7 @@ function Hero() {
             className="mb-8 badge-hero"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-[#5CD4F4]" />
-            Built by a 30-year disability law firm
+            AI for Veterans Disability Law Firms
           </motion.div>
 
           <motion.h1
@@ -64,10 +64,8 @@ function Hero() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="heading-page-dark"
           >
-            AI That Finds{" "}
-            <span className="gradient-text-shimmer">Opportunities</span>
-            <br />
-            <span className="text-slate-400">Not Just Facts</span>
+            Turn C-Files Into{" "}
+            <span className="gradient-text-shimmer">Case Strategy</span>
           </motion.h1>
 
           <motion.p
@@ -76,8 +74,8 @@ function Hero() {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="mx-auto mt-8 max-w-2xl text-lg text-slate-400 sm:text-xl"
           >
-            Document intelligence and case strategy AI built by disability law
-            experts. Process 5,000 pages in 10 minutes. Find what others miss.
+            Upload a 5,000-page file. Get secondary conditions, 3.156(c)
+            opportunities, and a complete medical timeline — in 10 minutes.
           </motion.p>
 
           <motion.div
