@@ -3,6 +3,19 @@ import { z } from "zod";
 
 const BVA_API_URL = process.env.BVA_API_URL || "http://localhost:8000";
 
+// Fields that can be broken down with computeBreakdown tool
+const BREAKDOWN_FIELDS = {
+  outcome: ["Granted", "Denied", "Remanded"],
+  va_exam: ["Has VA Exam", "No VA Exam", "VA Exam Favorable", "VA Exam Unfavorable"],
+  nexus: ["Nexus Positive", "Nexus Negative"],
+  combat_service: ["Yes", "No"],
+  buddy_statement: ["Yes", "No"],
+  mst_related: ["Yes", "No"],
+  is_secondary: ["Yes", "No"],
+} as const;
+
+type BreakdownField = keyof typeof BREAKDOWN_FIELDS;
+
 async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${BVA_API_URL}${path}`, {
     ...options,
@@ -102,13 +115,55 @@ export const bvaTools = {
 
   getMetadataPack: tool({
     description:
-      "Fetch a compact metadata sample for up to 50 cases matching the filters. Returns raw case metadata for you to analyze directly. Use this for statistical or pattern questions.",
+      "Fetch a compact metadata sample for up to 50 cases matching the filters. Returns raw case metadata for you to analyze directly. Use this ONLY for qualitative pattern questions that need multiple fields analyzed together.",
     inputSchema: filterSchema,
     execute: async (filters) => {
       return apiFetch("/api/cases/metadata-pack", {
         method: "POST",
         body: JSON.stringify(filters),
       });
+    },
+  }),
+
+  computeBreakdown: tool({
+    description:
+      "Compute exact statistics for a filtered case set by breaking down counts across a specific field. Returns precise counts and percentages for each value (e.g., Granted: 4200 (35%), Denied: 4800 (40%), Remanded: 3000 (25%)). Use this for questions about rates, distributions, and statistics — NOT getMetadataPack.",
+    inputSchema: filterSchema.extend({
+      breakdown_field: z.enum(["outcome", "va_exam", "nexus", "combat_service", "buddy_statement", "mst_related", "is_secondary"])
+        .describe("The field to break down by. Options: outcome (Granted/Denied/Remanded), va_exam (Has VA Exam/No VA Exam/VA Exam Favorable/VA Exam Unfavorable), nexus (Nexus Positive/Nexus Negative), combat_service/buddy_statement/mst_related/is_secondary (Yes/No)"),
+    }),
+    execute: async (params) => {
+      const { breakdown_field, ...baseFilters } = params;
+      const values = BREAKDOWN_FIELDS[breakdown_field as BreakdownField];
+
+      // Make parallel count calls for each value
+      const countPromises = values.map(async (value) => {
+        const filters = { ...baseFilters, [breakdown_field]: value };
+        const result = await apiFetch<{ total: number }>("/api/filters/count", {
+          method: "POST",
+          body: JSON.stringify(filters),
+        });
+        return { value, count: result.total };
+      });
+
+      const results = await Promise.all(countPromises);
+      const total = results.reduce((sum, r) => sum + r.count, 0);
+
+      // Calculate percentages
+      const breakdown = results.map(({ value, count }) => ({
+        value,
+        count,
+        pct: total > 0 ? `${((count / total) * 100).toFixed(1)}%` : "0.0%",
+      }));
+
+      return {
+        breakdown_field,
+        total,
+        breakdown,
+        filters_applied: Object.fromEntries(
+          Object.entries(baseFilters).filter(([, v]) => v !== "(All)" && v !== "")
+        ),
+      };
     },
   }),
 } satisfies ToolSet;

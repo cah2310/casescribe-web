@@ -2,10 +2,12 @@
 
 import type { UIMessage } from "ai";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { CitationLink } from "./CitationLink";
 import { ToolCallIndicator } from "./ToolCallIndicator";
 import { InlineCaseList } from "./InlineCaseList";
 import { InlineFilterState } from "./InlineFilterState";
+import { InlineBreakdown } from "./InlineBreakdown";
 
 interface CaseSummary {
   case_id: string;
@@ -63,6 +65,7 @@ export function ChatMessage({
             return (
               <div key={i} className={`prose prose-sm max-w-none ${isUser ? "prose-invert" : "prose-slate"}`}>
                 <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
                   components={{
                     a: ({ href, children }) => {
                       if (href?.startsWith("cite:")) {
@@ -141,6 +144,26 @@ export function ChatMessage({
                     <InlineFilterState
                       key={i}
                       total={data.total}
+                      filtersApplied={data.filters_applied}
+                    />
+                  );
+                }
+              }
+
+              if (toolPart.type === "tool-computeBreakdown") {
+                const data = toolPart.output as {
+                  breakdown_field: string;
+                  total: number;
+                  breakdown: { value: string; count: number; pct: string }[];
+                  filters_applied: Record<string, string>;
+                };
+                if (data.breakdown) {
+                  return (
+                    <InlineBreakdown
+                      key={i}
+                      breakdownField={data.breakdown_field}
+                      total={data.total}
+                      breakdown={data.breakdown}
                       filtersApplied={data.filters_applied}
                     />
                   );

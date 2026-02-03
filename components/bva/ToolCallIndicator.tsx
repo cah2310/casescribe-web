@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, CheckCircle2, AlertCircle, Filter, Search, FileText, Database } from "lucide-react";
+import { Loader2, CheckCircle2, AlertCircle, Filter, Search, FileText, Database, BarChart3 } from "lucide-react";
 
 const TOOL_LABELS: Record<string, { label: string; icon: typeof Search; accent: string }> = {
   getFilterOptions: { label: "Loading available filters", icon: Database, accent: "bg-blue-50 text-[#2C5DFF]" },
@@ -9,6 +9,7 @@ const TOOL_LABELS: Record<string, { label: string; icon: typeof Search; accent: 
   getCaseDetail: { label: "Loading case detail", icon: FileText, accent: "bg-teal-50 text-[#0080A3]" },
   semanticSearch: { label: "Searching decisions", icon: Search, accent: "bg-violet-50 text-[#4832A4]" },
   getMetadataPack: { label: "Loading case metadata", icon: Database, accent: "bg-green-50 text-[#3D6A5C]" },
+  computeBreakdown: { label: "Computing statistics", icon: BarChart3, accent: "bg-violet-50 text-[#4832A4]" },
 };
 
 interface ToolCallIndicatorProps {
