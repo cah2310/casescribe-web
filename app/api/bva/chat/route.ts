@@ -6,9 +6,10 @@ import {
   type InferUITools,
   type UIDataTypes,
 } from "ai";
-import { google } from "@ai-sdk/google";
+import { anthropic } from "@ai-sdk/anthropic";
 import { bvaTools } from "@/lib/bva/tools";
 import { BVA_SYSTEM_PROMPT } from "@/lib/bva/system-prompt";
+import { fetchFilterContext } from "@/lib/bva/filter-context";
 
 export const maxDuration = 60;
 
@@ -19,9 +20,11 @@ export async function POST(req: Request) {
   try {
     const { messages }: { messages: BVAChatMessage[] } = await req.json();
 
+    const filterContext = await fetchFilterContext();
+
     const result = streamText({
-      model: google("gemini-3-flash-preview"),
-      system: BVA_SYSTEM_PROMPT,
+      model: anthropic("claude-haiku-4-5-20251001"),
+      system: BVA_SYSTEM_PROMPT + filterContext,
       messages: await convertToModelMessages(messages),
       tools: bvaTools,
       stopWhen: stepCountIs(8),
