@@ -100,33 +100,14 @@ export const bvaTools = {
     },
   }),
 
-  analyzePatterns: tool({
+  getMetadataPack: tool({
     description:
-      "Analyze metadata patterns across filtered cases using Gemini LLM. Good for statistical questions like grant rates, common conditions, judge patterns, evidence trends. Requires a question and filters.",
-    inputSchema: filterSchema.extend({
-      question: z.string().describe("The analysis question to answer about the filtered cases"),
-      concise: z.boolean().default(true).describe("Whether to return concise (~250 words) or detailed analysis"),
-    }),
-    execute: async (params) => {
-      return apiFetch("/api/analysis/metadata", {
+      "Fetch a compact metadata sample for up to 50 cases matching the filters. Returns raw case metadata for you to analyze directly. Use this for statistical or pattern questions.",
+    inputSchema: filterSchema,
+    execute: async (filters) => {
+      return apiFetch("/api/cases/metadata-pack", {
         method: "POST",
-        body: JSON.stringify(params),
-      });
-    },
-  }),
-
-  analyzeCaseText: tool({
-    description:
-      "Analyze retrieved text passages using Gemini LLM. Use after semanticSearch to get a structured legal analysis of the retrieved evidence. Takes the evidence pack string from search results.",
-    inputSchema: z.object({
-      question: z.string().describe("The analysis question to answer"),
-      evidence_pack: z.string().describe("The evidence pack string built from semantic search results"),
-      concise: z.boolean().default(true).describe("Whether to return concise or detailed analysis"),
-    }),
-    execute: async (params) => {
-      return apiFetch("/api/analysis/chunks", {
-        method: "POST",
-        body: JSON.stringify(params),
+        body: JSON.stringify(filters),
       });
     },
   }),

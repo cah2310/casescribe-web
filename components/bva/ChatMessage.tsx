@@ -5,7 +5,6 @@ import ReactMarkdown from "react-markdown";
 import { CitationLink } from "./CitationLink";
 import { ToolCallIndicator } from "./ToolCallIndicator";
 import { InlineCaseList } from "./InlineCaseList";
-import { InlineAnalysis } from "./InlineAnalysis";
 import { InlineFilterState } from "./InlineFilterState";
 
 interface CaseSummary {
@@ -26,9 +25,18 @@ interface ChatMessageProps {
   onUnpinCase: (caseId: string) => void;
 }
 
-/** Convert [[case_id]] citations to markdown links with a cite: scheme */
+/** Convert case citations to markdown links with a cite: scheme.
+ *  Handles [[case_id]] (intended format) and [case_id]() / [case_id](#)
+ *  (LLMs sometimes generate these instead of double-bracket notation). */
 function prepareCitations(text: string): string {
-  return text.replace(/\[\[([^\]]+)\]\]/g, "[$1](cite:$1)");
+  // Convert [[case_id]] notation
+  let result = text.replace(/\[\[([^\]]+)\]\]/g, "[$1](cite:$1)");
+  // Convert [case_id]() or [case_id](#) where case_id looks like a BVA ID
+  result = result.replace(
+    /\[([A-Z]?\d{6,})\]\(\s*#?\s*\)/g,
+    "[$1](cite:$1)",
+  );
+  return result;
 }
 
 export function ChatMessage({
@@ -63,6 +71,16 @@ export function ChatMessage({
                           <CitationLink
                             caseId={caseId}
                             onClick={() => onCaseClick(caseId)}
+                          />
+                        );
+                      }
+                      // Fallback: detect case IDs the LLM linked as plain markdown
+                      const text = typeof children === "string" ? children.trim() : "";
+                      if (text && /^[A-Z]?\d{6,}$/.test(text)) {
+                        return (
+                          <CitationLink
+                            caseId={text}
+                            onClick={() => onCaseClick(text)}
                           />
                         );
                       }
@@ -103,17 +121,14 @@ export function ChatMessage({
                 }
               }
 
-              if (
-                toolPart.type === "tool-analyzePatterns" ||
-                toolPart.type === "tool-analyzeCaseText"
-              ) {
-                const data = toolPart.output as { analysis: string; question: string };
-                if (data.analysis) {
+              if (toolPart.type === "tool-getMetadataPack") {
+                const data = toolPart.output as { total_cases: number; sample_size: number };
+                if (data.total_cases !== undefined) {
                   return (
-                    <InlineAnalysis
+                    <InlineFilterState
                       key={i}
-                      analysis={data.analysis}
-                      question={data.question}
+                      total={data.total_cases}
+                      filtersApplied={{ "metadata sample": `${data.sample_size} cases` }}
                     />
                   );
                 }

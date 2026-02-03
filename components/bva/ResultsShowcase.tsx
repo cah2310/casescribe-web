@@ -157,7 +157,7 @@ export function ResultsShowcase() {
         <FadeIn delay={0.45}>
           <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
             <Sparkles className="h-3.5 w-3.5" />
-            <span>AI-powered by Claude + Gemini</span>
+            <span>AI-powered analysis</span>
           </div>
         </FadeIn>
       </div>
