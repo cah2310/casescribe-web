@@ -39,7 +39,7 @@ export function Navbar() {
 
   const navBg = isDarkNav
     ? "bg-transparent border-transparent"
-    : "bg-white/80 backdrop-blur-xl border-slate-200/60 shadow-sm";
+    : "bg-white/95 backdrop-blur-xl border-slate-200/60 shadow-sm";
 
   const logoTextColor = isDarkNav ? "text-white" : "text-slate-900";
 
