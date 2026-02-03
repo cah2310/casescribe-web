@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import { Loader2 } from "lucide-react";
 import { ChatMessage } from "./ChatMessage";
 import { ChatInput } from "./ChatInput";
 import { ResultsEmpty } from "./ResultsEmpty";
@@ -41,9 +42,13 @@ export function ChatPanel({
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, status]);
 
   const isEmpty = messages.length === 0;
+
+  // Show thinking indicator when waiting for response
+  const lastMessage = messages[messages.length - 1];
+  const isThinking = status !== "ready" && lastMessage?.role === "user";
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
@@ -62,6 +67,14 @@ export function ChatPanel({
                 onUnpinCase={onUnpinCase}
               />
             ))}
+            {isThinking && (
+              <div className="flex justify-start">
+                <div className="flex items-center gap-2 rounded-2xl rounded-bl-md border border-slate-200/80 bg-white px-4 py-3 text-sm text-slate-500 shadow-sm">
+                  <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
+                  <span>Thinking...</span>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
