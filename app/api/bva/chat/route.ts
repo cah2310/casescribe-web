@@ -27,9 +27,15 @@ export async function POST(req: Request) {
       system: BVA_SYSTEM_PROMPT + filterContext,
       messages: await convertToModelMessages(messages),
       tools: bvaTools,
-      stopWhen: stepCountIs(12),
+      stopWhen: stepCountIs(15),
       onStepFinish: (step) => {
-        console.log(`[BVA] Step finished: tools=${step.toolCalls?.length || 0}, reason=${step.finishReason}`);
+        console.log(`[BVA] Step: tools=${step.toolCalls?.length || 0}, text=${step.text?.length || 0} chars, reason=${step.finishReason}`);
+      },
+      onFinish: (event) => {
+        console.log(`[BVA] Stream finished: steps=${event.steps?.length || 0}, reason=${event.finishReason}, text=${event.text?.length || 0} chars`);
+      },
+      onError: (error) => {
+        console.error(`[BVA] Stream error:`, error);
       },
     });
 
