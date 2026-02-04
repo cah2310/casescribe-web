@@ -27,7 +27,10 @@ export async function POST(req: Request) {
       system: BVA_SYSTEM_PROMPT + filterContext,
       messages: await convertToModelMessages(messages),
       tools: bvaTools,
-      stopWhen: stepCountIs(8),
+      stopWhen: stepCountIs(12),
+      onStepFinish: (step) => {
+        console.log(`[BVA] Step finished: tools=${step.toolCalls?.length || 0}, reason=${step.finishReason}`);
+      },
     });
 
     return result.toUIMessageStreamResponse();
