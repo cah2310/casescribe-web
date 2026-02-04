@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { Plus } from "lucide-react";
+import { Plus, AlertCircle } from "lucide-react";
 import { ChatPanel } from "./ChatPanel";
 import { WorkspacePanel } from "./WorkspacePanel";
 import { CaseDetailModal } from "./CaseDetailModal";
@@ -23,9 +23,32 @@ interface CaseSummary {
 }
 
 export function ExplorerLayout() {
-  const { messages, sendMessage, status, setMessages } = useChat<BVAChatMessage>({
+  const { messages, sendMessage, status, setMessages, error } = useChat<BVAChatMessage>({
     transport: new DefaultChatTransport({ api: "/api/bva/chat" }),
+    onFinish: (event) => {
+      console.log("[BVA Client] Chat finished:", {
+        finishReason: event.finishReason,
+        isAbort: event.isAbort,
+        isError: event.isError,
+        messageCount: event.messages?.length,
+      });
+    },
+    onError: (err) => {
+      console.error("[BVA Client] Chat error:", err);
+    },
   });
+
+  // Log status changes for debugging
+  useEffect(() => {
+    console.log("[BVA Client] Status changed:", status);
+  }, [status]);
+
+  // Log errors
+  useEffect(() => {
+    if (error) {
+      console.error("[BVA Client] Error state:", error);
+    }
+  }, [error]);
 
   const handleNewChat = useCallback(() => {
     setMessages([]);
@@ -167,6 +190,12 @@ export function ExplorerLayout() {
             onPinCase={handlePinFromChat}
             onUnpinCase={handleUnpinCase}
           />
+          {error && (
+            <div className="mx-4 mb-2 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-700">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              <span>Error: {error.message || "Something went wrong"}</span>
+            </div>
+          )}
         </div>
 
         {/* Workspace panel — sidebar */}
