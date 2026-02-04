@@ -98,15 +98,16 @@ export const bvaTools = {
 
   semanticSearch: tool({
     description:
-      "Perform natural language semantic search over BVA decision text. Finds passages that are conceptually similar to the query. Optionally limit to specific case IDs from a filtered set. Returns scored text chunks.",
+      "Hybrid search combining keyword matching AND semantic similarity over BVA decision text. Finds passages containing specific terms AND conceptually similar content. Use this for evidence questions, legal reasoning, and finding relevant case language.",
     inputSchema: z.object({
-      query: z.string().describe("Natural language search query about legal reasoning, evidence, or findings"),
+      query: z.string().describe("Search query — can be keywords, phrases, or natural language questions"),
       case_ids: z.array(z.string()).optional().describe("Optional list of case IDs to search within (from filtered results)"),
       top_k: z.number().default(20).describe("Number of results to return"),
+      alpha: z.number().default(0.5).describe("Search balance: 0=keyword only, 1=semantic only, 0.5=balanced hybrid"),
       exclude_procedural: z.boolean().default(false).describe("Whether to exclude procedural/boilerplate text"),
     }),
     execute: async (params) => {
-      return apiFetch("/api/search/semantic", {
+      return apiFetch("/api/search/hybrid", {
         method: "POST",
         body: JSON.stringify(params),
       });
